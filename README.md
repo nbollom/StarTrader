@@ -1,7 +1,7 @@
 # StarTrader
 ## A Space Trading/Combat Simulator
 
-## Requires:
+### Requires:
 - SDL2
 - SDL2_Image
 - SDL2_Mixer
