@@ -29,8 +29,8 @@ void Controller::Run() {
         event->PopAllKeyMaps();
         win->Close();
     }
-    catch (std::runtime_error *err) {
-        error << err->what() << std::endl;
+    catch (std::runtime_error &err) {
+        error << err.what() << std::endl;
     }
     CloseGraphics();
 }

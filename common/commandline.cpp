@@ -30,7 +30,7 @@ void CommandLineProcessor::AddOption(const char shortName, const string longName
     for (OI it = options.begin(); it != options.end(); ++it) {
         shared_ptr<Option> existingOption = *it;
         if (option->shortName == existingOption->shortName || option->longName == existingOption->longName) {
-            throw new OptionExistsException(option, existingOption);
+            throw OptionExistsException(option, existingOption);
         }
     }
     options.push_back(option);
@@ -41,7 +41,7 @@ void CommandLineProcessor::AddValueOnlyOption(const string name, const string de
     for (VOI it = values.begin(); it != values.end(); ++it) {
         shared_ptr<ValueOption> existingOption = *it;
         if (option->name == existingOption->name) {
-            throw new ValueOptionExistsException(option, existingOption);
+            throw ValueOptionExistsException(option, existingOption);
         }
     }
     values.push_back(option);
@@ -58,7 +58,7 @@ bool CommandLineProcessor::Parse(int argc, const char *const *argv) {
         string val = argv[i];
         if (!parsingValueOptions && val.front() == '-') {
             if (val.length() < 2) {
-                throw new InvalidArgumentException(val);
+                throw InvalidArgumentException(val);
             }
             shared_ptr<Option> option;
             string option_str;
@@ -71,7 +71,7 @@ bool CommandLineProcessor::Parse(int argc, const char *const *argv) {
                 option = GetOptionByShortName(option_str[0]);
             }
             if (option == nullptr) {
-                throw new UnknownArgumentException(option_str);
+                throw UnknownArgumentException(option_str);
             }
             option->found = true;
             if (option->shortName == 'h') {
@@ -117,21 +117,21 @@ bool CommandLineProcessor::Parse(int argc, const char *const *argv) {
                 if (++i < argc) { // not the end of the parameters yet
                     string optionValue = string(argv[i]);
                     if (optionValue.front() == '-') {
-                        throw new MissingValueException(option_str, option);
+                        throw MissingValueException(option_str, option);
                     }
                     else {
                         option->value = optionValue;
                     }
                 }
                 else {
-                    throw new MissingValueException(option_str, option);
+                    throw MissingValueException(option_str, option);
                 }
             }
         }
         else {
             parsingValueOptions = true;
             if (currentValueOption == values.end()) {
-                throw new UnknownArgumentException(val);
+                throw UnknownArgumentException(val);
             }
             (*currentValueOption)->value = val;
             currentValueOption++;

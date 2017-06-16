@@ -28,7 +28,7 @@ std::string LogLevelName(LogLevels level) {
         return "ERROR";
     }
     else {
-        throw new std::runtime_error("Invalid logging level");
+        throw std::runtime_error("Invalid logging level");
     }
 }
 
@@ -48,7 +48,7 @@ LogLevels LogLevelFromName(std::string level_str) {
         return LogLevelError;
     }
     else {
-        throw new std::runtime_error("Invalid logging level");
+        throw std::runtime_error("Invalid logging level");
     }
 }
 
@@ -125,14 +125,14 @@ void LogInit(LogLevels level) {
 
 void LogSetLevel(LogLevels level) {
     if (instance == nullptr) {
-        throw new std::runtime_error("Log not initialised");
+        throw std::runtime_error("Log not initialised");
     }
     instance->SetLogLevel(level);
 }
 
 void LogFlush() {
     if (instance == nullptr) {
-        throw new std::runtime_error("Log not initialised");
+        throw std::runtime_error("Log not initialised");
     }
     instance->Flush();
 }
@@ -147,7 +147,7 @@ void LogClose() {
 
 std::ostream* LogGetStream(LogLevels level) {
     if (instance == nullptr) {
-        throw new std::runtime_error("Log not initialised");
+        throw std::runtime_error("Log not initialised");
     }
     return instance->GetStream(level);
 }

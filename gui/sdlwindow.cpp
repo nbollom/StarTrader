@@ -31,7 +31,7 @@ void SDLWindow::CreateWindow() {
         flags |= SDL_WINDOW_FULLSCREEN;
     }
     if (SDL_CreateWindowAndRenderer(_width, _height, flags, &_window, &_renderer)) {
-        throw new std::runtime_error("Failed to initialise window");
+        throw std::runtime_error("Failed to initialise window");
     }
     SDL_RenderClear(_renderer);
     SDL_RenderPresent(_renderer);

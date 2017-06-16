@@ -10,8 +10,8 @@ int main(int argc, const char * const *argv) {
             return 0;
         }
     }
-    catch (ParseException *err) {
-        std::cout << err->what() << std::endl << err->GetExceptionMessage() << std::endl;
+    catch (ParseException &err) {
+        std::cout << err.what() << std::endl << err.GetExceptionMessage() << std::endl;
         return 1;
     }
     std::string level_str = cmd.GetOptionValue('l');
@@ -19,7 +19,7 @@ int main(int argc, const char * const *argv) {
         LogLevels level = LogLevelFromName(level_str);
         LogInit(level);
     }
-    catch (std::runtime_error *err) {
+    catch (std::runtime_error &err) {
         LogInit(LogLevelWarning);
         error << "Unknown log level " << level_str << std::endl;
         return 1;

@@ -32,8 +32,8 @@ namespace JSON {
         virtual bool IsNumber() { return false; }
         virtual bool IsBool() { return false; }
 
-        virtual std::shared_ptr<Object> AsObject() { throw new std::runtime_error("Invalid type cast"); }
-        virtual std::shared_ptr<Array> AsArray() { throw new std::runtime_error("Invalid type cast"); }
+        virtual std::shared_ptr<Object> AsObject() { throw std::runtime_error("Invalid type cast"); }
+        virtual std::shared_ptr<Array> AsArray() { throw std::runtime_error("Invalid type cast"); }
 
         virtual std::wstring StringValue() = 0;
         virtual double NumberValue() = 0;

@@ -5,7 +5,6 @@
 #ifndef STARTRADER_JSON_H
 #define STARTRADER_JSON_H
 
-#include <functional>
 #include <fstream>
 #include "jsonvalue.h"
 #include "jsoniterable.h"
@@ -18,12 +17,15 @@
 
 namespace JSON {
 
-    class Document : public Iterable {
+    class Document {
 
     private:
         std::shared_ptr<Iterable> _root;
 
-        static std::shared_ptr<Document> Parse(std::function<std::wstring()> source);
+        static std::shared_ptr<Document> ParseDocument(std::wistream *source);
+        static std::shared_ptr<Object> ParseObject(std::wistream *source);
+        static std::shared_ptr<Array> ParseArray(std::wistream *source);
+        static std::shared_ptr<Value> ParseValue(std::wistream *source);
 
     public:
         Document();
@@ -34,8 +36,8 @@ namespace JSON {
 
         std::shared_ptr<Iterable> GetRoot();
 
-        std::shared_ptr<Object> AsObject() override;
-        std::shared_ptr<Array> AsArray() override;
+        std::shared_ptr<Object> AsObject();
+        std::shared_ptr<Array> AsArray();
 
         static std::shared_ptr<Document> Parse(std::wstring string);
         static std::shared_ptr<Document> Parse(std::wifstream stream);

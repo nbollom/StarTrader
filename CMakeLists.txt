@@ -8,10 +8,17 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/output)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/output)
 set(RESOURCES_OUTPUT_PATH ${PROJECT_BINARY_DIR}/output/data) # custom directory to copy resources to
 
+option(BUILD_TESTS "Build the test projects" OFF)
+
 add_subdirectory(game)
 add_subdirectory(common)
 add_subdirectory(gui)
 add_subdirectory(data)
+if (BUILD_TESTS)
+    enable_testing()
+    SET(CTEST_OUTPUT_ON_FAILURE ON)
+    add_subdirectory(test/common)
+endif (BUILD_TESTS)
 
 set(SOURCE_FILES main.cpp)
 
