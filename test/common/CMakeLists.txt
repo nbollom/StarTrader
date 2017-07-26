@@ -11,4 +11,4 @@ add_executable(Common_Test ${SOURCE_FILES})
 target_link_libraries(Common_Test Common)
 
 add_test(NAME Test_Common
-        COMMAND Common_Test)
+        COMMAND Common_Test -d y)

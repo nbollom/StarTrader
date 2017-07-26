@@ -14,6 +14,7 @@
 #include "jsonstring.h"
 #include "jsonboolean.h"
 #include "jsonnumber.h"
+#include "jsonparsestream.h"
 
 namespace JSON {
 
@@ -22,10 +23,14 @@ namespace JSON {
     private:
         std::shared_ptr<Iterable> _root;
 
-        static std::shared_ptr<Document> ParseDocument(std::wistream *source);
-        static std::shared_ptr<Object> ParseObject(std::wistream *source);
-        static std::shared_ptr<Array> ParseArray(std::wistream *source);
-        static std::shared_ptr<Value> ParseValue(std::wistream *source);
+        static std::shared_ptr<Document> ParseDocument(JSONParseStream *source);
+        static std::shared_ptr<Object> ParseObject(JSONParseStream *source);
+        static std::shared_ptr<Array> ParseArray(JSONParseStream *source);
+        static std::shared_ptr<Value> ParseValue(JSONParseStream *source);
+        static std::shared_ptr<String> ParseString(JSONParseStream *source);
+        static std::shared_ptr<Number> ParseNumber(JSONParseStream *source);
+        static std::shared_ptr<Boolean> ParseBoolean(JSONParseStream *source);
+        static std::shared_ptr<Null> ParseNull(JSONParseStream *source);
 
     public:
         Document();

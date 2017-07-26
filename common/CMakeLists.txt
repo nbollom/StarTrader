@@ -28,6 +28,6 @@ set(SOURCE_FILES
         jsonboolean.cpp
         jsonboolean.h
         jsonnumber.cpp
-        jsonnumber.h)
+        jsonnumber.h jsonparseexception.h jsonparsestream.cpp jsonparsestream.h)
 
 add_library(Common ${SOURCE_FILES})
