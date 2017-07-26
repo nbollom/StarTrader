@@ -179,7 +179,7 @@ TEST_CASE("JSON - Standard Numbers", "[JSON]") {
 
 TEST_CASE("JSON - Exponantial Numbers", "[JSON]") {
     std::wstring json = L"[1e10, -1e10, 1e-10, -1e-10]";
-    double values[] = {10000000000, -10000000000, 0.0000000001, -0.0000000001};
+    double values[] = {1e10, -1e10, 1e-10, -1e-10};
     std::shared_ptr<JSON::Document> doc = JSON::Document::Parse(json);
     REQUIRE(doc != nullptr);
     std::shared_ptr<JSON::Iterable> root = doc->GetRoot();
