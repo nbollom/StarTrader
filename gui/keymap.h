@@ -38,9 +38,9 @@ public:
 
 #pragma mark Public Methods
 public:
-    void AddKeyHandler(const int32_t key, const int modifier, const int event, std::function<void()> handler);
-    void AddKeyHandler(const struct KeyEvent event, std::function<void()> handler);
-    std::function<void()> operator[](const KeyEvent event);
+    void AddKeyHandler(const int32_t &key, const int &modifier, const int &event, std::function<void()> &handler);
+    void AddKeyHandler(const struct KeyEvent &event, std::function<void()> &handler);
+    std::function<void()> operator[](const KeyEvent &event);
 
 #pragma mark Accessors
 public:

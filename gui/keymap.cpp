@@ -35,16 +35,16 @@ KeyMap::~KeyMap() {
 }
 
 
-void KeyMap::AddKeyHandler(const int32_t key, const int modifier, const int event, std::function<void()> handler) {
+void KeyMap::AddKeyHandler(const int32_t &key, const int &modifier, const int &event, std::function<void()> &handler) {
     KeyEvent e(key, modifier, event);
     AddKeyHandler(e, handler);
 }
 
-void KeyMap::AddKeyHandler(const struct KeyEvent event, std::function<void()> handler) {
+void KeyMap::AddKeyHandler(const struct KeyEvent &event, std::function<void()> &handler) {
     _map[event] = handler;
 }
 
-std::function<void()> KeyMap::operator[](const KeyEvent event) {
+std::function<void()> KeyMap::operator[](const KeyEvent &event) {
     return _map[event];
 }
 

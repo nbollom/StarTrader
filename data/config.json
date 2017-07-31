@@ -1,4 +1,6 @@
 {
-  "name": "StarTrader",
-  "": ""
+  "window_name": "StarTrader",
+  "design_width": 1920,
+  "design_height": 1200,
+  "log_level": "error"
 }

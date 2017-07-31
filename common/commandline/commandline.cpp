@@ -8,14 +8,14 @@
 typedef list<shared_ptr<Option>>::iterator OI;
 typedef list<shared_ptr<ValueOption>>::iterator VOI;
 
-inline int max(const int a, const int b) {
+inline unsigned long max(const unsigned long &a, const unsigned long &b) {
     if (a > b) {
         return a;
     }
     return b;
 }
 
-inline std::string pad(const int length) {
+inline std::string pad(const unsigned long length) {
     return std::string(length, ' ');
 }
 
@@ -27,8 +27,7 @@ CommandLineProcessor::CommandLineProcessor(const string program_name, const stri
 
 void CommandLineProcessor::AddOption(const char shortName, const string longName, const string description, const bool hasValue, const string valueDescription, string defaultValue) {
     shared_ptr<Option> option = make_shared<Option>(shortName, longName, description, hasValue, valueDescription, false, defaultValue);
-    for (OI it = options.begin(); it != options.end(); ++it) {
-        shared_ptr<Option> existingOption = *it;
+    for (const auto &existingOption : options) {
         if (option->shortName == existingOption->shortName || option->longName == existingOption->longName) {
             throw OptionExistsException(option, existingOption);
         }
@@ -38,8 +37,7 @@ void CommandLineProcessor::AddOption(const char shortName, const string longName
 
 void CommandLineProcessor::AddValueOnlyOption(const string name, const string description, string defaultValue) {
     shared_ptr<ValueOption> option = make_shared<ValueOption>(name, description, defaultValue);
-    for (VOI it = values.begin(); it != values.end(); ++it) {
-        shared_ptr<ValueOption> existingOption = *it;
+    for (const auto &existingOption : values) {
         if (option->name == existingOption->name) {
             throw ValueOptionExistsException(option, existingOption);
         }
@@ -49,11 +47,12 @@ void CommandLineProcessor::AddValueOnlyOption(const string name, const string de
 
 bool CommandLineProcessor::Parse(int argc, const char *const *argv) {
     string executable = argv[0];
-    if (int index = executable.rfind('/') != -1) {
+    unsigned long index = executable.rfind('/');
+    if (index != std::string::npos) {
         executable = executable.substr(index + 1);
     }
     bool parsingValueOptions = false;
-    VOI currentValueOption = values.begin();
+    auto currentValueOption = values.begin();
     for (int i = 1; i < argc; ++i) {
         string val = argv[i];
         if (!parsingValueOptions && val.front() == '-') {
@@ -82,9 +81,8 @@ bool CommandLineProcessor::Parse(int argc, const char *const *argv) {
                 });
                 std::string usage_str;
                 std::string value_usage_str;
-                int longest_name = 0;
-                for (list<shared_ptr<Option>>::iterator i = options.begin(); i != options.end(); ++i) {
-                    shared_ptr<Option> op = *i;
+                unsigned long longest_name = 0;
+                for (const auto &op : options) {
                     if (op->hasValue) {
                         value_usage_str += " -";
                         value_usage_str += op->shortName;
@@ -98,17 +96,22 @@ bool CommandLineProcessor::Parse(int argc, const char *const *argv) {
                     longest_name = max(longest_name, op->longName.length());
                 }
                 std::cout << "Usage: " << executable << " [-" << usage_str << value_usage_str << "]" << std::endl << std::endl;
-                for (list<shared_ptr<Option>>::iterator i = options.begin(); i != options.end(); ++i) {
-                    shared_ptr<Option> op = *i;
+                for (const auto &op : options) {
                     std::cout << "\t-" << op->shortName << "\t--" << op->longName << pad(longest_name - op->longName.length()) << "\t" << op->description << std::endl;
                     if (op->hasValue) {
-                        std::cout << "\t\t" << pad(longest_name + 2) << "\t" << op->valueDescription << " (Default: " << op->value << ")" <<  std::endl;
+                        std::cout << "\t\t" << pad(longest_name + 2) << "\t" << op->valueDescription;
+                        if (op->value.length() > 0) {
+                            std::cout << " (Default: " << op->value << ")" <<  std::endl;
+                        }
+                        else {
+                            std::cout <<  std::endl;
+                        }
                     }
                 }
                 std::cout << std::endl;
                 return false;
             }
-            else if (option->shortName == 'v') {
+            if (option->shortName == 'v') {
                 std::cout << name << std::endl;
                 std::cout << "Version: " << version << std::endl;
                 return false;
@@ -174,9 +177,9 @@ string CommandLineProcessor::GetOptionValue(string longName) {
 
 string CommandLineProcessor::GetValueOnlyOptionValue(string name) {
     shared_ptr<ValueOption> option = nullptr;
-    for (VOI it = values.begin(); it != values.end(); ++it) {
-        if ((*it)->name == name) {
-            option = *it;
+    for (auto &value : values) {
+        if (value->name == name) {
+            option = value;
             break;
         }
     }
@@ -186,19 +189,19 @@ string CommandLineProcessor::GetValueOnlyOptionValue(string name) {
     return option->value;
 }
 
-shared_ptr<Option> CommandLineProcessor::GetOptionByShortName(char shortName) {
-    for (OI it = options.begin(); it != options.end(); ++it) {
-        if ((*it)->shortName == shortName) {
-            return *it;
+shared_ptr<Option> CommandLineProcessor::GetOptionByShortName(const char &shortName) {
+    for (auto &option : options) {
+        if (option->shortName == shortName) {
+            return option;
         }
     }
     return nullptr;
 }
 
-shared_ptr<Option> CommandLineProcessor::GetOptionByLongName(string longName) {
-    for (OI it = options.begin(); it != options.end(); ++it) {
-        if ((*it)->longName == longName) {
-            return *it;
+shared_ptr<Option> CommandLineProcessor::GetOptionByLongName(const string &longName) {
+    for (auto &option : options) {
+        if (option->longName == longName) {
+            return option;
         }
     }
     return nullptr;

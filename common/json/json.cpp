@@ -54,7 +54,7 @@ namespace JSON {
         return ParseDocument(json_stream);
     }
 
-    std::shared_ptr<Document> Document::Parse(std::wifstream stream) {
+    std::shared_ptr<Document> Document::Parse(std::wifstream &stream) {
         JSONParseStream *json_stream = new JSONParseStream(&stream);
         return ParseDocument(json_stream);
     }

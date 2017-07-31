@@ -17,7 +17,7 @@ private:
 
 
 public:
-    Controller(CommandLineProcessor *cmd);
+    Controller(int argc, const char * const *argv);
     ~Controller();
 
     void Run();
@@ -26,8 +26,8 @@ public:
 };
 
 typedef shared_ptr<Controller> ControllerPtr;
-static inline ControllerPtr MakeController(CommandLineProcessor *cmd) {
-    return make_shared<Controller>(cmd);
+static inline ControllerPtr MakeController(int argc, const char * const *argv) {
+    return make_shared<Controller>(argc, argv);
 }
 
 #endif //STARTRADER_CONTROLLER_H

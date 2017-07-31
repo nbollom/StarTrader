@@ -37,4 +37,6 @@ public:
 typedef std::shared_ptr<Window> Window_Ptr;
 Window_Ptr MakeWindow_Ptr(int width, int height, bool fullscreen);
 
+void GetScreenSize(int &width, int &height);
+
 #endif //STARTRADER_WINDOW_H

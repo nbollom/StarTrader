@@ -114,40 +114,40 @@ LogLevels Logger::LogLevel() {
     return log_level;
 }
 
-Logger *instance = nullptr;
+Logger *log_instance = nullptr;
 
 void LogInit(LogLevels level) {
-    if (instance == nullptr) {
-        instance = new Logger();
+    if (log_instance == nullptr) {
+        log_instance = new Logger();
     }
-    instance->SetLogLevel(level);
+    log_instance->SetLogLevel(level);
 }
 
 void LogSetLevel(LogLevels level) {
-    if (instance == nullptr) {
+    if (log_instance == nullptr) {
         throw std::runtime_error("Log not initialised");
     }
-    instance->SetLogLevel(level);
+    log_instance->SetLogLevel(level);
 }
 
 void LogFlush() {
-    if (instance == nullptr) {
+    if (log_instance == nullptr) {
         throw std::runtime_error("Log not initialised");
     }
-    instance->Flush();
+    log_instance->Flush();
 }
 
 void LogClose() {
-    if (instance != nullptr) {
-        instance->Flush();
-        delete instance;
-        instance = nullptr;
+    if (log_instance != nullptr) {
+        log_instance->Flush();
+        delete log_instance;
+        log_instance = nullptr;
     }
 }
 
 std::ostream* LogGetStream(LogLevels level) {
-    if (instance == nullptr) {
+    if (log_instance == nullptr) {
         throw std::runtime_error("Log not initialised");
     }
-    return instance->GetStream(level);
+    return log_instance->GetStream(level);
 }

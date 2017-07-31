@@ -45,7 +45,7 @@ namespace JSON {
         std::shared_ptr<Array> AsArray();
 
         static std::shared_ptr<Document> Parse(std::wstring string);
-        static std::shared_ptr<Document> Parse(std::wifstream stream);
+        static std::shared_ptr<Document> Parse(std::wifstream &stream);
     };
 
 }

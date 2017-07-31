@@ -22,8 +22,8 @@ private:
     list<shared_ptr<Option>> options;
     list<shared_ptr<ValueOption>> values;
 
-    shared_ptr<Option> GetOptionByShortName(char shortName);
-    shared_ptr<Option> GetOptionByLongName(string longName);
+    shared_ptr<Option> GetOptionByShortName(const char &shortName);
+    shared_ptr<Option> GetOptionByLongName(const string &longName);
 
 public:
     CommandLineProcessor(const string program_name, const string program_description, const string program_version);

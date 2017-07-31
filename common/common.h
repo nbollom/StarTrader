@@ -5,8 +5,10 @@
 #ifndef STARTRADER_COMMON_H
 #define STARTRADER_COMMON_H
 
-#include "log.h"
-#include "commandline.h"
-#include "json.h"
+#include "json/json.h"
+#include "resource/resource.h"
+#include "configuration/configuration.h"
+#include "commandline/commandline.h"
+#include "log/log.h"
 
 #endif //STARTRADER_COMMON_H

@@ -30,7 +30,7 @@ void SDLWindow::CreateWindow() {
     if (_fullscreen) {
         flags |= SDL_WINDOW_FULLSCREEN;
     }
-    if (SDL_CreateWindowAndRenderer(_width, _height, flags, &_window, &_renderer)) {
+    if (SDL_CreateWindowAndRenderer(_width, _height, flags, &_window, &_renderer) != 0) {
         throw std::runtime_error("Failed to initialise window");
     }
     SDL_RenderClear(_renderer);
@@ -64,4 +64,12 @@ Window_Ptr MakeWindow_Ptr(int width, int height, bool fullscreen) {
     SDLWindow *win = new SDLWindow(width, height, fullscreen);
     Window_Ptr ptr(win);
     return ptr;
+}
+
+void GetScreenSize(int &width, int &height) {
+    SDL_DisplayMode dm;
+    if (SDL_GetDesktopDisplayMode(0, &dm) == 0) {
+        width = dm.w;
+        height = dm.h;
+    }
 }
